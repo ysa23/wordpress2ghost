@@ -35,11 +35,15 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blog\Meta.cs" />
+    <Compile Include="Blog\Post.cs" />
+    <Compile Include="Blog\Tag.cs" />
     <Compile Include="Ghost\ImportData.cs" />
     <Compile Include="Ghost\Meta.cs" />
     <Compile Include="Ghost\Post.cs" />
     <Compile Include="Ghost\PostTag.cs" />
     <Compile Include="Ghost\Tag.cs" />
+    <Compile Include="Net\ICrawler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

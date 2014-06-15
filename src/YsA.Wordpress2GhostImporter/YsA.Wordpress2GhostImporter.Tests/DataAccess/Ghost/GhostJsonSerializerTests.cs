@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using NUnit.Framework;
 using YsA.Wordpress2GhostImporter.DataAccess.Ghost;
 using YsA.Wordpress2GhostImporter.DataAccess.Json;
@@ -14,6 +15,17 @@ namespace YsA.Wordpress2GhostImporter.Tests.DataAccess.Ghost
 		public void Setup()
 		{
 			_target = new GhostJsonSerializer();
+		}
+
+		[Test]
+		public void Given_WhenWhen_ExpectedResult()
+		{
+			var text = "June 3, 2014";
+			var format = "MMMM d, yyyy";
+
+			var result = DateTime.ParseExact(text, format, new CultureInfo("en-US", true));
+
+			Assert.That(result, Is.Not.Null);
 		}
 
 		[Test]

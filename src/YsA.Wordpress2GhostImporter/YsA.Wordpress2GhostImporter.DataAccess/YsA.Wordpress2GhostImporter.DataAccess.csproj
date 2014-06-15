@@ -41,6 +41,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ghost\GhostJsonSerializer.cs" />
@@ -48,6 +50,13 @@
     <Compile Include="Json\MilisecondsDateConverter.cs" />
     <Compile Include="Json\UnderscorePropertyContractResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Wordpress\WordpressCrawler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YsA.Wordpress2GhostImporter.Domain\YsA.Wordpress2GhostImporter.Domain.csproj">
+      <Project>{8c4ef6b9-da00-4c88-97f8-709df5a8e825}</Project>
+      <Name>YsA.Wordpress2GhostImporter.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
