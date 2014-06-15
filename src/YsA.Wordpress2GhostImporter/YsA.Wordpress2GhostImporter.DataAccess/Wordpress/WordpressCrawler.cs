@@ -38,15 +38,13 @@ namespace YsA.Wordpress2GhostImporter.DataAccess.Wordpress
 			var html = web.Load(postUrl);
 
 			var content = html.DocumentNode.SelectSingleNode("//section/article/div[@class='contx entry-content clearfix']");
-
 			RemoveRedundentContent(content);
 
 			return new Post
 			{
 				Url = postUrl,
 				Title = html.DocumentNode.SelectSingleNode("//section/article/h2/a").InnerText,
-				Content =
-					content.InnerHtml,
+				Content = content.InnerHtml,
 				Timestamp = GetTimestamp(html),
 				Meta = GetMeta(html),
 				Tags = GetTags(html)
@@ -72,12 +70,29 @@ namespace YsA.Wordpress2GhostImporter.DataAccess.Wordpress
 
 		private IList<Tag> GetTags(HtmlDocument html)
 		{
-			return null;
+			var nodes = html.DocumentNode.SelectSingleNode("//section/article").SelectNodes("descendant::a[@rel='tag']");
+
+			return nodes
+				.Select(x => new Tag {Name = x.InnerText, Url = x.Attributes["href"].Value})
+				.ToArray();
 		}
 
 		private Meta GetMeta(HtmlDocument html)
 		{
-			return null;
+			return new Meta
+			{
+				Title = GetMetaValue(html, "title"),
+				Description = GetMetaValue(html, "description")
+			};
+		}
+
+		private string GetMetaValue(HtmlDocument html, string metaType)
+		{
+			var node = html.DocumentNode.SelectSingleNode("//head/meta[@name='" + metaType + "']");
+
+			return node == null
+				? null
+				: node.Attributes["content"].Value;
 		}
 	}
 }
