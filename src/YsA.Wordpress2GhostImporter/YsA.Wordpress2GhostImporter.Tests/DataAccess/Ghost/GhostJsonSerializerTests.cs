@@ -1,18 +1,19 @@
 ﻿using System;
 using NUnit.Framework;
+using YsA.Wordpress2GhostImporter.DataAccess.Ghost;
 using YsA.Wordpress2GhostImporter.DataAccess.Json;
 
-namespace YsA.Wordpress2GhostImporter.Tests.DataAccess.Json
+namespace YsA.Wordpress2GhostImporter.Tests.DataAccess.Ghost
 {
 	[TestFixture]
-	public class JsonSerializerTests
+	public class GhostJsonSerializerTests
 	{
 		private IJsonSerializer _target;
 
 		[SetUp]
 		public void Setup()
 		{
-			_target = new JsonSerializer();
+			_target = new GhostJsonSerializer();
 		}
 
 		[Test]
