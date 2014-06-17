@@ -2,9 +2,9 @@
 {
 	public class ImportData
 	{
-		public Meta Meta { get; set; }
-		public Post[] Posts { get; set; }
-		public Tag[] Tags { get; set; }
+		public GhostMeta Meta { get; set; }
+		public GhostPost[] Posts { get; set; }
+		public GhostTag[] Tags { get; set; }
 		public PostTag[] PostTags { get; set; }
 	}
 }

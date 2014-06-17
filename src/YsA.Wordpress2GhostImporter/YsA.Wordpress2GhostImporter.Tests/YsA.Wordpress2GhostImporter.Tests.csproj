@@ -34,18 +34,26 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\nunit\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\..\lib\Rhino.Mocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\Ghost\GhostJsonSerializerTests.cs" />
+    <Compile Include="Domain\Ghost\GhostConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\YsA.Wordpress2GhostImporter.DataAccess\YsA.Wordpress2GhostImporter.DataAccess.csproj">
       <Project>{DAE6F625-5529-4AA5-9A21-8CB5E81F369B}</Project>
       <Name>YsA.Wordpress2GhostImporter.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YsA.Wordpress2GhostImporter.Domain\YsA.Wordpress2GhostImporter.Domain.csproj">
+      <Project>{8c4ef6b9-da00-4c88-97f8-709df5a8e825}</Project>
+      <Name>YsA.Wordpress2GhostImporter.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

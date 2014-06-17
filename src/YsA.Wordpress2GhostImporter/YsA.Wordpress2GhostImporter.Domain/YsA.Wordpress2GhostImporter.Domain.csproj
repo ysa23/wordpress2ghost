@@ -38,13 +38,16 @@
     <Compile Include="Blog\Meta.cs" />
     <Compile Include="Blog\Post.cs" />
     <Compile Include="Blog\Tag.cs" />
+    <Compile Include="Enumerables\EnumerableEx.cs" />
+    <Compile Include="Ghost\GhostConverter.cs" />
     <Compile Include="Ghost\ImportData.cs" />
-    <Compile Include="Ghost\Meta.cs" />
-    <Compile Include="Ghost\Post.cs" />
+    <Compile Include="Ghost\GhostMeta.cs" />
+    <Compile Include="Ghost\GhostPost.cs" />
     <Compile Include="Ghost\PostTag.cs" />
-    <Compile Include="Ghost\Tag.cs" />
+    <Compile Include="Ghost\GhostTag.cs" />
     <Compile Include="Net\ICrawler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Time\DateTimeProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

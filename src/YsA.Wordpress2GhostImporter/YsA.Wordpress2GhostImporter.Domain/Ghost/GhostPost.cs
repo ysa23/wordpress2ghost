@@ -2,7 +2,7 @@
 
 namespace YsA.Wordpress2GhostImporter.Domain.Ghost
 {
-	public class Post
+	public class GhostPost
 	{
 		public long Id { get; set; }
 		public string Uuid { get; set; }
