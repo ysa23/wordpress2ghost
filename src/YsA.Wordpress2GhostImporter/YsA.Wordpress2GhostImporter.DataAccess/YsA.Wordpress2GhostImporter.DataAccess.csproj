@@ -49,6 +49,7 @@
     <Compile Include="Json\JsonSerializer.cs" />
     <Compile Include="Json\MilisecondsDateConverter.cs" />
     <Compile Include="Json\UnderscorePropertyContractResolver.cs" />
+    <Compile Include="Net\HtmlReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Wordpress\WordpressCrawler.cs" />
   </ItemGroup>

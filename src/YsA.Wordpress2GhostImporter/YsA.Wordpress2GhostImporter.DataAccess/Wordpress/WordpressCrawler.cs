@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using HtmlAgilityPack;
+using YsA.Wordpress2GhostImporter.DataAccess.Net;
 using YsA.Wordpress2GhostImporter.Domain.Blog;
 using YsA.Wordpress2GhostImporter.Domain.Net;
 
@@ -10,10 +11,16 @@ namespace YsA.Wordpress2GhostImporter.DataAccess.Wordpress
 {
 	public class WordpressCrawler : ICrawler<IEnumerable<Post>>
 	{
+		private readonly IHtmlReader _htmlReader;
+
+		public WordpressCrawler(IHtmlReader htmlReader)
+		{
+			_htmlReader = htmlReader;
+		}
+
 		public IEnumerable<Post> Crawl(string targetUrl)
 		{
-			var web = new HtmlWeb();
-			var html = web.Load(targetUrl);
+			var html = _htmlReader.GetHtmlFromUrl(targetUrl);
 
 			while (true)
 			{
@@ -28,7 +35,7 @@ namespace YsA.Wordpress2GhostImporter.DataAccess.Wordpress
 				if (nextPageLink == null || !nextPageLink.InnerText.Contains("next"))
 					yield break;
 
-				html = web.Load(nextPageLink.Attributes["href"].Value);
+				html = _htmlReader.GetHtmlFromUrl(nextPageLink.Attributes["href"].Value);
 			}
 		}
 
