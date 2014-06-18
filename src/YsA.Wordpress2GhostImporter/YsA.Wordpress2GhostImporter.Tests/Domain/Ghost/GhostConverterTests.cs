@@ -55,8 +55,7 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 				x.MetaTitle == null &&
 				x.MetaDescription == null &&
 				x.CreatedAt == new DateTime(2014, 1, 2) &&
-				x.PublishedAt == new DateTime(2014, 1, 2) &&
-				x.UpdatedAt == new DateTime(2014, 1, 2)));
+				x.PublishedAt == new DateTime(2014, 1, 2)));
 			Assert.That(result.Posts, Has.Some.Matches<GhostPost>(x =>
 				x.Id == 2 &&
 				x.Title == "post2" &&
@@ -65,8 +64,7 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 				x.MetaTitle == null &&
 				x.MetaDescription == null &&
 				x.CreatedAt == new DateTime(2014, 4, 5) &&
-				x.PublishedAt == new DateTime(2014, 4, 5) &&
-				x.UpdatedAt == new DateTime(2014, 4, 5)));
+				x.PublishedAt == new DateTime(2014, 4, 5)));
 			Assert.That(result.Tags, Is.Empty, "Tags should be empty");
 			Assert.That(result.PostTags, Is.Empty, "PostTags should be empty");
 		}
@@ -91,26 +89,22 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
 				x.Id == 1 && 
 				x.Name == "tag1" && 
-				x.CreatedAt == now &&
-				x.UpdatedAt == now
+				x.CreatedAt == now
 			));
 			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
 				x.Id == 2 &&
 				x.Name == "tag2" &&
-				x.CreatedAt == now &&
-				x.UpdatedAt == now
+				x.CreatedAt == now
 			));
 			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
 				x.Id == 3 &&
 				x.Name == "tag3" &&
-				x.CreatedAt == now &&
-				x.UpdatedAt == now
+				x.CreatedAt == now
 			));
 			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
 				x.Id == 4 &&
 				x.Name == "tag4" &&
-				x.CreatedAt == now &&
-				x.UpdatedAt == now
+				x.CreatedAt == now
 			));
 			Assert.That(result.PostTags, Has.Length.EqualTo(4));
 			Assert.That(result.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 1));
@@ -120,7 +114,7 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 		}
 
 		[Test]
-		public void FromPosts_WhenPostsContainsTheSameTags_CreateOnlyOneInstaceOFSharedTags()
+		public void FromPosts_WhenPostsContainsTheSameTags_CreateOnlyOneInstaceOfSharedTags()
 		{
 			SetNow(new DateTime(2014, 6, 7));
 

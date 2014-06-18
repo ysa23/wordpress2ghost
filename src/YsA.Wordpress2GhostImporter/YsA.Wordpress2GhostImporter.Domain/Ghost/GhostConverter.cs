@@ -60,7 +60,6 @@ namespace YsA.Wordpress2GhostImporter.Domain.Ghost
 			{
 				Id = index + 1,
 				CreatedAt = _dateTimeProvider.Now(),
-				UpdatedAt = _dateTimeProvider.Now(),
 				Name = name
 			};
 		}
@@ -74,7 +73,6 @@ namespace YsA.Wordpress2GhostImporter.Domain.Ghost
 				Html = post.Content,
 				Markdown = post.Content,
 				CreatedAt = post.Timestamp,
-				UpdatedAt = post.Timestamp,
 				PublishedAt = post.Timestamp
 			};
 		}
