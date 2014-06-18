@@ -92,29 +92,25 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 				x.Id == 1 && 
 				x.Name == "tag1" && 
 				x.CreatedAt == now &&
-				x.UpdatedAt == now &&
-				x.Slug == "tag1"
+				x.UpdatedAt == now
 			));
 			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
 				x.Id == 2 &&
 				x.Name == "tag2" &&
 				x.CreatedAt == now &&
-				x.UpdatedAt == now &&
-				x.Slug == "tag2"
+				x.UpdatedAt == now
 			));
 			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
 				x.Id == 3 &&
 				x.Name == "tag3" &&
 				x.CreatedAt == now &&
-				x.UpdatedAt == now &&
-				x.Slug == "tag3"
+				x.UpdatedAt == now
 			));
 			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
 				x.Id == 4 &&
 				x.Name == "tag4" &&
 				x.CreatedAt == now &&
-				x.UpdatedAt == now &&
-				x.Slug == "tag4"
+				x.UpdatedAt == now
 			));
 			Assert.That(result.PostTags, Has.Length.EqualTo(4));
 			Assert.That(result.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 1));
