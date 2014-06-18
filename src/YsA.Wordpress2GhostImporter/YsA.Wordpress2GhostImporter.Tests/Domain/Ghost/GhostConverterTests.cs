@@ -166,6 +166,42 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 			Assert.That(result.Posts, Has.Some.Matches<GhostPost>(x => x.Id == 1 && x.MetaTitle == "meta title" && x.MetaDescription == "meta description"));
 		}
 
+		[Test]
+		public void FromPosts_WhenConvertingPost_SetAuthorAndAuditFieldsAsZero()
+		{
+			SetNow(new DateTime(2014, 1, 2));
+
+			var posts = new[]
+			{
+				new Post { Title = "post1", Content = "<p>first content</p>", Tags = null, Timestamp = new DateTime(2014, 1, 2) },
+				new Post { Title = "post2", Content = "<p>second content</p>", Tags = null, Timestamp = new DateTime(2014, 4, 5) }
+			};
+
+			var result = _target.FromPosts(posts);
+
+			Assert.That(result, Is.Not.Null);
+			Assert.That(result.Posts, Has.Length.EqualTo(2));
+			Assert.That(result.Posts, Has.All.Matches<GhostPost>(x => x.AuthorId == 0 && x.CreatedBy == 0 && x.PublishedBy == 0));
+		}
+
+		[Test]
+		public void FromPosts_WhenConvertingPost_SetStatusAsPublished()
+		{
+			SetNow(new DateTime(2014, 1, 2));
+
+			var posts = new[]
+			{
+				new Post { Title = "post1", Content = "<p>first content</p>", Tags = null, Timestamp = new DateTime(2014, 1, 2) },
+				new Post { Title = "post2", Content = "<p>second content</p>", Tags = null, Timestamp = new DateTime(2014, 4, 5) }
+			};
+
+			var result = _target.FromPosts(posts);
+
+			Assert.That(result, Is.Not.Null);
+			Assert.That(result.Posts, Has.Length.EqualTo(2));
+			Assert.That(result.Posts, Has.All.Matches<GhostPost>(x => x.Status == "published"));
+		}
+
 		private void SetNow(DateTime dateTime)
 		{
 			_dateTimeProvider
