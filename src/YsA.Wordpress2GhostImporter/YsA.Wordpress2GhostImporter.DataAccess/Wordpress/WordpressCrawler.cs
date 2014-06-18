@@ -9,7 +9,11 @@ using YsA.Wordpress2GhostImporter.Domain.Net;
 
 namespace YsA.Wordpress2GhostImporter.DataAccess.Wordpress
 {
-	public class WordpressCrawler : ICrawler<IEnumerable<Post>>
+	public interface IWordpressCrawler : ICrawler<IEnumerable<Post>>
+	{
+	}
+
+	public class WordpressCrawler : IWordpressCrawler
 	{
 		private readonly IHtmlReader _htmlReader;
 
