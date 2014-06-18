@@ -73,7 +73,9 @@ namespace YsA.Wordpress2GhostImporter.Domain.Ghost
 				Html = post.Content,
 				Markdown = post.Content,
 				CreatedAt = post.Timestamp,
-				PublishedAt = post.Timestamp
+				PublishedAt = post.Timestamp,
+				MetaTitle = post.Meta == null ? null : post.Meta.Title,
+				MetaDescription = post.Meta == null ? null : post.Meta.Description
 			};
 		}
 	}

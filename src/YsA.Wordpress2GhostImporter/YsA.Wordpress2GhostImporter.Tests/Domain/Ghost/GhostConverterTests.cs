@@ -47,9 +47,9 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 
 			Assert.That(result, Is.Not.Null);
 			Assert.That(result.Posts, Has.Length.EqualTo(2));
-			Assert.That(result.Posts, Has.Some.Matches<GhostPost>(x => 
-				x.Id == 1 && 
-				x.Title == "post1" && 
+			Assert.That(result.Posts, Has.Some.Matches<GhostPost>(x =>
+				x.Id == 1 &&
+				x.Title == "post1" &&
 				x.Html == "<p>first content</p>" &&
 				x.Markdown == "<p>first content</p>" &&
 				x.MetaTitle == null &&
@@ -87,8 +87,8 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 			Assert.That(result.Posts, Has.Length.EqualTo(2));
 			Assert.That(result.Tags, Has.Length.EqualTo(4));
 			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
-				x.Id == 1 && 
-				x.Name == "tag1" && 
+				x.Id == 1 &&
+				x.Name == "tag1" &&
 				x.CreatedAt == now
 			));
 			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
@@ -146,6 +146,24 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 			Assert.That(result.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 2));
 			Assert.That(result.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 1));
 			Assert.That(result.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 3));
+		}
+
+		[Test]
+		public void FromPosts_WhenPostHasMeta_SetMetaTitleAndDescription()
+		{
+			SetNow(new DateTime(2014, 1, 2));
+
+			var posts = new[]
+			{
+				new Post { Title = "post1", Content = "<p>first content</p>", Tags = null, Timestamp = new DateTime(2014, 1, 2), Meta = new Meta { Title = "meta title", Description = "meta description" }},
+				new Post { Title = "post2", Content = "<p>second content</p>", Tags = null, Timestamp = new DateTime(2014, 4, 5) }
+			};
+
+			var result = _target.FromPosts(posts);
+
+			Assert.That(result, Is.Not.Null);
+			Assert.That(result.Posts, Has.Length.EqualTo(2));
+			Assert.That(result.Posts, Has.Some.Matches<GhostPost>(x => x.Id == 1 && x.MetaTitle == "meta title" && x.MetaDescription == "meta description"));
 		}
 
 		private void SetNow(DateTime dateTime)
