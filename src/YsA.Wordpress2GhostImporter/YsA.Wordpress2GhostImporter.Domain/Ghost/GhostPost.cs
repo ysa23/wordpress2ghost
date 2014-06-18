@@ -7,7 +7,6 @@ namespace YsA.Wordpress2GhostImporter.Domain.Ghost
 		public long Id { get; set; }
 		public string Uuid { get; set; }
 		public string Title { get; set; }
-		public string Slug { get; set; }
 		public string Markdown { get; set; }
 		public string Html { get; set; }
 		public string Image { get; set; }
