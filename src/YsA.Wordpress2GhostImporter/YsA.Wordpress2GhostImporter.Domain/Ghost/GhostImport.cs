@@ -16,6 +16,6 @@
 	{
 		public GhostPost[] Posts { get; set; }
 		public GhostTag[] Tags { get; set; }
-		public PostTag[] PostTags { get; set; }
+		public PostTag[] PostsTags { get; set; }
 	}
 }

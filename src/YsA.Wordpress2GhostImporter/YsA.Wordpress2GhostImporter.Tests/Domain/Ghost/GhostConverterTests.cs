@@ -67,7 +67,7 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 				x.CreatedAt == new DateTime(2014, 4, 5) &&
 				x.PublishedAt == new DateTime(2014, 4, 5)));
 			Assert.That(result.Data.Tags, Is.Empty, "Tags should be empty");
-			Assert.That(result.Data.PostTags, Is.Empty, "PostTags should be empty");
+			Assert.That(result.Data.PostsTags, Is.Empty, "PostsTags should be empty");
 		}
 
 		[Test]
@@ -108,11 +108,11 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 				x.Name == "tag4" &&
 				x.CreatedAt == now
 			));
-			Assert.That(result.Data.PostTags, Has.Length.EqualTo(4));
-			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 1));
-			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 2));
-			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 3));
-			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 4));
+			Assert.That(result.Data.PostsTags, Has.Length.EqualTo(4));
+			Assert.That(result.Data.PostsTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 1));
+			Assert.That(result.Data.PostsTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 2));
+			Assert.That(result.Data.PostsTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 3));
+			Assert.That(result.Data.PostsTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 4));
 		}
 
 		[Test]
@@ -144,11 +144,11 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 				x.Id == 3 &&
 				x.Name == "tag3"
 			));
-			Assert.That(result.Data.PostTags, Has.Length.EqualTo(4));
-			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 1));
-			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 2));
-			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 1));
-			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 3));
+			Assert.That(result.Data.PostsTags, Has.Length.EqualTo(4));
+			Assert.That(result.Data.PostsTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 1));
+			Assert.That(result.Data.PostsTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 2));
+			Assert.That(result.Data.PostsTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 1));
+			Assert.That(result.Data.PostsTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 3));
 		}
 
 		[Test]

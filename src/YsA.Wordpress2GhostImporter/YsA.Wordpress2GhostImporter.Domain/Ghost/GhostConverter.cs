@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using YsA.Wordpress2GhostImporter.Domain.Blog;
 using YsA.Wordpress2GhostImporter.Domain.Enumerables;
 using YsA.Wordpress2GhostImporter.Domain.Time;
@@ -37,7 +36,7 @@ namespace YsA.Wordpress2GhostImporter.Domain.Ghost
 			{
 				Posts = postsWithTags.Select(x => x.GhostPost).ToArray(),
 				Tags = tags,
-				PostTags = postsWithTags
+				PostsTags = postsWithTags
 					.SelectMany(x => x.Tags
 						.Select(t => new { Tag = t, Post = x.GhostPost }))
 					.Join(tags, x => x.Tag, x => x.Name, (p, t) => new PostTag { PostId = p.Post.Id, TagId = t.Id })
