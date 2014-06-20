@@ -2,6 +2,11 @@
 {
 	public class ImportData
 	{
+		public ImportData()
+		{
+			Meta = new GhostMeta();
+		}
+
 		public GhostMeta Meta { get; set; }
 		public GhostPost[] Posts { get; set; }
 		public GhostTag[] Tags { get; set; }

@@ -2,6 +2,6 @@
 {
 	public class GhostMeta
 	{
-		public string Version { get; set; } 
+		public string Version { get { return "002"; } } 
 	}
 }
