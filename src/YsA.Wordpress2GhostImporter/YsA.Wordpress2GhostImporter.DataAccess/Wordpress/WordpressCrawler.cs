@@ -45,21 +45,27 @@ namespace YsA.Wordpress2GhostImporter.DataAccess.Wordpress
 
 		private Post CrawlPost(string postUrl)
 		{
-			var web = new HtmlWeb();
-			var html = web.Load(postUrl);
-
-			var content = html.DocumentNode.SelectSingleNode("//section/article/div[@class='contx entry-content clearfix']");
-			RemoveRedundentContent(content);
-
-			return new Post
+			try
 			{
-				Url = postUrl,
-				Title = html.DocumentNode.SelectSingleNode("//section/article/h2/a").InnerText,
-				Content = content.InnerHtml,
-				Timestamp = GetTimestamp(html),
-				Meta = GetMeta(html),
-				Tags = GetTags(html)
-			};
+				var html = _htmlReader.GetHtmlFromUrl(postUrl);
+
+				var content = html.DocumentNode.SelectSingleNode("//section/article/div[@class='contx entry-content clearfix']");
+				RemoveRedundentContent(content);
+
+				return new Post
+				{
+					Url = postUrl,
+					Title = html.DocumentNode.SelectSingleNode("//section/article/h2/a").InnerText,
+					Content = content.InnerHtml,
+					Timestamp = GetTimestamp(html),
+					Meta = GetMeta(html),
+					Tags = GetTags(html)
+				};
+			}
+			catch (Exception ex)
+			{
+				throw new PostCrawlingException(postUrl, ex);
+			}
 		}
 
 		private void RemoveRedundentContent(HtmlNode content)
@@ -82,6 +88,9 @@ namespace YsA.Wordpress2GhostImporter.DataAccess.Wordpress
 		private IList<Tag> GetTags(HtmlDocument html)
 		{
 			var nodes = html.DocumentNode.SelectSingleNode("//section/article").SelectNodes("descendant::a[@rel='tag']");
+
+			if (nodes == null || nodes.Count == 0)
+				throw new PostIsNotTaggedException();
 
 			return nodes
 				.Select(x => new Tag {Name = x.InnerText, Url = x.Attributes["href"].Value})
