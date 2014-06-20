@@ -226,6 +226,23 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 			Assert.That(result.Meta.Version, Is.EqualTo("002"));
 		}
 
+		[Test]
+		public void FromPosts_WhenPostContentContainsNewLineCharacters_RemoveThem()
+		{
+			SetNow(new DateTime(2014, 1, 2));
+
+			var posts = new[]
+			{
+				new Post { Title = "post1", Content = "<p>\n\n\r\t\n content </p>", Tags = null, Timestamp = new DateTime(2014, 1, 2) }
+			};
+
+			var result = _target.FromPosts(posts);
+
+			Assert.That(result, Is.Not.Null);
+			Assert.That(result.Data, Is.Not.Null);
+			Assert.That(result.Data.Posts, Has.Some.Matches<GhostPost>(x => x.Html == "<p> content </p>"));
+		}
+
 		private void SetNow(DateTime dateTime)
 		{
 			_dateTimeProvider

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using YsA.Wordpress2GhostImporter.Domain.Blog;
 using YsA.Wordpress2GhostImporter.Domain.Enumerables;
 using YsA.Wordpress2GhostImporter.Domain.Time;
@@ -66,12 +67,14 @@ namespace YsA.Wordpress2GhostImporter.Domain.Ghost
 
 		private static GhostPost FromPost(Post post, int index)
 		{
+			var sanitisedContent = post.Content.Replace("\n", string.Empty).Replace("\t", string.Empty).Replace("\r", string.Empty);
+			
 			return new GhostPost
 			{
 				Id = index + 1,
 				Title = post.Title,
-				Html = post.Content,
-				Markdown = post.Content,
+				Html = sanitisedContent,
+				Markdown = sanitisedContent,
 				CreatedAt = post.Timestamp,
 				PublishedAt = post.Timestamp,
 				MetaTitle = post.Meta == null ? null : post.Meta.Title,
