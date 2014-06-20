@@ -40,7 +40,7 @@
     <Compile Include="Blog\Tag.cs" />
     <Compile Include="Enumerables\EnumerableEx.cs" />
     <Compile Include="Ghost\GhostConverter.cs" />
-    <Compile Include="Ghost\ImportData.cs" />
+    <Compile Include="Ghost\GhostImport.cs" />
     <Compile Include="Ghost\GhostMeta.cs" />
     <Compile Include="Ghost\GhostPost.cs" />
     <Compile Include="Ghost\PostTag.cs" />

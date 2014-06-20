@@ -46,8 +46,9 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 			var result = _target.FromPosts(posts);
 
 			Assert.That(result, Is.Not.Null);
-			Assert.That(result.Posts, Has.Length.EqualTo(2));
-			Assert.That(result.Posts, Has.Some.Matches<GhostPost>(x =>
+			Assert.That(result.Data, Is.Not.Null);
+			Assert.That(result.Data.Posts, Has.Length.EqualTo(2));
+			Assert.That(result.Data.Posts, Has.Some.Matches<GhostPost>(x =>
 				x.Id == 1 &&
 				x.Title == "post1" &&
 				x.Html == "<p>first content</p>" &&
@@ -56,7 +57,7 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 				x.MetaDescription == null &&
 				x.CreatedAt == new DateTime(2014, 1, 2) &&
 				x.PublishedAt == new DateTime(2014, 1, 2)));
-			Assert.That(result.Posts, Has.Some.Matches<GhostPost>(x =>
+			Assert.That(result.Data.Posts, Has.Some.Matches<GhostPost>(x =>
 				x.Id == 2 &&
 				x.Title == "post2" &&
 				x.Html == "<p>second content</p>" &&
@@ -65,8 +66,8 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 				x.MetaDescription == null &&
 				x.CreatedAt == new DateTime(2014, 4, 5) &&
 				x.PublishedAt == new DateTime(2014, 4, 5)));
-			Assert.That(result.Tags, Is.Empty, "Tags should be empty");
-			Assert.That(result.PostTags, Is.Empty, "PostTags should be empty");
+			Assert.That(result.Data.Tags, Is.Empty, "Tags should be empty");
+			Assert.That(result.Data.PostTags, Is.Empty, "PostTags should be empty");
 		}
 
 		[Test]
@@ -84,33 +85,34 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 			var result = _target.FromPosts(posts);
 
 			Assert.That(result, Is.Not.Null);
-			Assert.That(result.Posts, Has.Length.EqualTo(2));
-			Assert.That(result.Tags, Has.Length.EqualTo(4));
-			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
+			Assert.That(result.Data, Is.Not.Null);
+			Assert.That(result.Data.Posts, Has.Length.EqualTo(2));
+			Assert.That(result.Data.Tags, Has.Length.EqualTo(4));
+			Assert.That(result.Data.Tags, Has.Some.Matches<GhostTag>(x =>
 				x.Id == 1 &&
 				x.Name == "tag1" &&
 				x.CreatedAt == now
 			));
-			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
+			Assert.That(result.Data.Tags, Has.Some.Matches<GhostTag>(x =>
 				x.Id == 2 &&
 				x.Name == "tag2" &&
 				x.CreatedAt == now
 			));
-			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
+			Assert.That(result.Data.Tags, Has.Some.Matches<GhostTag>(x =>
 				x.Id == 3 &&
 				x.Name == "tag3" &&
 				x.CreatedAt == now
 			));
-			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
+			Assert.That(result.Data.Tags, Has.Some.Matches<GhostTag>(x =>
 				x.Id == 4 &&
 				x.Name == "tag4" &&
 				x.CreatedAt == now
 			));
-			Assert.That(result.PostTags, Has.Length.EqualTo(4));
-			Assert.That(result.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 1));
-			Assert.That(result.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 2));
-			Assert.That(result.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 3));
-			Assert.That(result.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 4));
+			Assert.That(result.Data.PostTags, Has.Length.EqualTo(4));
+			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 1));
+			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 2));
+			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 3));
+			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 4));
 		}
 
 		[Test]
@@ -127,25 +129,26 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 			var result = _target.FromPosts(posts);
 
 			Assert.That(result, Is.Not.Null);
-			Assert.That(result.Posts, Has.Length.EqualTo(2));
-			Assert.That(result.Tags, Has.Length.EqualTo(3));
-			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
+			Assert.That(result.Data, Is.Not.Null);
+			Assert.That(result.Data.Posts, Has.Length.EqualTo(2));
+			Assert.That(result.Data.Tags, Has.Length.EqualTo(3));
+			Assert.That(result.Data.Tags, Has.Some.Matches<GhostTag>(x =>
 				x.Id == 1 &&
 				x.Name == "tag1"
 			));
-			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
+			Assert.That(result.Data.Tags, Has.Some.Matches<GhostTag>(x =>
 				x.Id == 2 &&
 				x.Name == "tag2"
 			));
-			Assert.That(result.Tags, Has.Some.Matches<GhostTag>(x =>
+			Assert.That(result.Data.Tags, Has.Some.Matches<GhostTag>(x =>
 				x.Id == 3 &&
 				x.Name == "tag3"
 			));
-			Assert.That(result.PostTags, Has.Length.EqualTo(4));
-			Assert.That(result.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 1));
-			Assert.That(result.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 2));
-			Assert.That(result.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 1));
-			Assert.That(result.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 3));
+			Assert.That(result.Data.PostTags, Has.Length.EqualTo(4));
+			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 1));
+			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 1 && x.TagId == 2));
+			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 1));
+			Assert.That(result.Data.PostTags, Has.Some.Matches<PostTag>(x => x.PostId == 2 && x.TagId == 3));
 		}
 
 		[Test]
@@ -162,8 +165,9 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 			var result = _target.FromPosts(posts);
 
 			Assert.That(result, Is.Not.Null);
-			Assert.That(result.Posts, Has.Length.EqualTo(2));
-			Assert.That(result.Posts, Has.Some.Matches<GhostPost>(x => x.Id == 1 && x.MetaTitle == "meta title" && x.MetaDescription == "meta description"));
+			Assert.That(result.Data, Is.Not.Null);
+			Assert.That(result.Data.Posts, Has.Length.EqualTo(2));
+			Assert.That(result.Data.Posts, Has.Some.Matches<GhostPost>(x => x.Id == 1 && x.MetaTitle == "meta title" && x.MetaDescription == "meta description"));
 		}
 
 		[Test]
@@ -180,8 +184,9 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 			var result = _target.FromPosts(posts);
 
 			Assert.That(result, Is.Not.Null);
-			Assert.That(result.Posts, Has.Length.EqualTo(2));
-			Assert.That(result.Posts, Has.All.Matches<GhostPost>(x => x.AuthorId == 0 && x.CreatedBy == 0 && x.PublishedBy == 0));
+			Assert.That(result.Data, Is.Not.Null);
+			Assert.That(result.Data.Posts, Has.Length.EqualTo(2));
+			Assert.That(result.Data.Posts, Has.All.Matches<GhostPost>(x => x.AuthorId == 0 && x.CreatedBy == 0 && x.PublishedBy == 0));
 		}
 
 		[Test]
@@ -198,8 +203,9 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 			var result = _target.FromPosts(posts);
 
 			Assert.That(result, Is.Not.Null);
-			Assert.That(result.Posts, Has.Length.EqualTo(2));
-			Assert.That(result.Posts, Has.All.Matches<GhostPost>(x => x.Status == "published"));
+			Assert.That(result.Data, Is.Not.Null);
+			Assert.That(result.Data.Posts, Has.Length.EqualTo(2));
+			Assert.That(result.Data.Posts, Has.All.Matches<GhostPost>(x => x.Status == "published"));
 		}
 
 		[Test]

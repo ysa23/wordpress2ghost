@@ -1,13 +1,19 @@
 ﻿namespace YsA.Wordpress2GhostImporter.Domain.Ghost
 {
-	public class ImportData
+	public class GhostImport
 	{
-		public ImportData()
+		public GhostImport(GhostImportData data)
 		{
 			Meta = new GhostMeta();
+			Data = data;
 		}
 
 		public GhostMeta Meta { get; set; }
+		public GhostImportData Data { get; set; }
+	}
+
+	public class GhostImportData
+	{
 		public GhostPost[] Posts { get; set; }
 		public GhostTag[] Tags { get; set; }
 		public PostTag[] PostTags { get; set; }

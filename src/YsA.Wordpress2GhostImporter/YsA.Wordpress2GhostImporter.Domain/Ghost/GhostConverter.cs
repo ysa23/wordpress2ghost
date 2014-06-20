@@ -9,7 +9,7 @@ namespace YsA.Wordpress2GhostImporter.Domain.Ghost
 {
 	public interface IGhostConverter
 	{
-		ImportData FromPosts(IList<Post> posts);
+		GhostImport FromPosts(IList<Post> posts);
 	}
 
 	public class GhostConverter : IGhostConverter
@@ -21,7 +21,7 @@ namespace YsA.Wordpress2GhostImporter.Domain.Ghost
 			_dateTimeProvider = dateTimeProvider;
 		}
 
-		public ImportData FromPosts(IList<Post> posts)
+		public GhostImport FromPosts(IList<Post> posts)
 		{
 			if (posts == null) throw new ArgumentNullException("posts");
 
@@ -32,7 +32,7 @@ namespace YsA.Wordpress2GhostImporter.Domain.Ghost
 				posts.Select((x, i) => new {GhostPost = FromPost(x, i), Tags = x.Tags.EmptyIfNull().Select(t => t.Name)}).ToArray();
 			var tags = GetTagsFromPosts(posts);
 
-			return new ImportData
+			return new GhostImport(new GhostImportData
 			{
 				Posts = postsWithTags.Select(x => x.GhostPost).ToArray(),
 				Tags = tags,
@@ -41,7 +41,7 @@ namespace YsA.Wordpress2GhostImporter.Domain.Ghost
 						.Select(t => new { Tag = t, Post = x.GhostPost }))
 					.Join(tags, x => x.Tag, x => x.Name, (p, t) => new PostTag { PostId = p.Post.Id, TagId = t.Id })
 					.ToArray()
-			};
+			});
 		}
 
 		private GhostTag[] GetTagsFromPosts(IList<Post> posts)
