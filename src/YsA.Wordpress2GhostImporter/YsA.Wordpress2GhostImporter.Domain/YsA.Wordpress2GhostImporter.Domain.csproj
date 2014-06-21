@@ -47,6 +47,7 @@
     <Compile Include="Ghost\PostTag.cs" />
     <Compile Include="Ghost\GhostTag.cs" />
     <Compile Include="Net\ICrawler.cs" />
+    <Compile Include="Net\IImageDownloader.cs" />
     <Compile Include="Net\PostCrawlingException.cs" />
     <Compile Include="Blog\PostIsNotTaggedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
