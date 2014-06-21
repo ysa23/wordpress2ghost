@@ -5,6 +5,7 @@ using System.Linq;
 using HtmlAgilityPack;
 using YsA.Wordpress2GhostImporter.DataAccess.Net;
 using YsA.Wordpress2GhostImporter.Domain.Blog;
+using YsA.Wordpress2GhostImporter.Domain.Enumerables;
 using YsA.Wordpress2GhostImporter.Domain.Net;
 
 namespace YsA.Wordpress2GhostImporter.DataAccess.Wordpress
@@ -59,13 +60,23 @@ namespace YsA.Wordpress2GhostImporter.DataAccess.Wordpress
 					Content = content.InnerHtml,
 					Timestamp = GetTimestamp(html),
 					Meta = GetMeta(html),
-					Tags = GetTags(html)
+					Tags = GetTags(html),
+					Images = GetImages(content)
 				};
 			}
 			catch (Exception ex)
 			{
 				throw new PostCrawlingException(postUrl, ex);
 			}
+		}
+
+		private IList<Image> GetImages(HtmlNode content)
+		{
+			return content
+				.SelectNodes("descendant::img")
+				.EmptyIfNull()
+				.Select(x => new Image(x.Attributes["src"].Value))
+				.ToArray();
 		}
 
 		private void RemoveRedundentContent(HtmlNode content)

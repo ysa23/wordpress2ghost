@@ -35,6 +35,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blog\Image.cs" />
     <Compile Include="Blog\Meta.cs" />
     <Compile Include="Blog\Post.cs" />
     <Compile Include="Blog\Tag.cs" />

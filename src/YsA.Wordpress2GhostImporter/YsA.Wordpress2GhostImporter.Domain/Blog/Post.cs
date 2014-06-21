@@ -11,5 +11,6 @@ namespace YsA.Wordpress2GhostImporter.Domain.Blog
 		public Meta Meta { get; set; }
 		public DateTime Timestamp { get; set; }
 		public IList<Tag> Tags { get; set; }
+		public IList<Image> Images { get; set; } 
 	}
 }
