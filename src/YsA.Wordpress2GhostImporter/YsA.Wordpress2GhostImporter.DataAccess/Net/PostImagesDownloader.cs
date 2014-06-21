@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -27,9 +28,27 @@ namespace YsA.Wordpress2GhostImporter.DataAccess.Net
 
 				foreach (var image in post.Images)
 				{
-					_imageDownloader.DownloadImage(image.Url, Path.Combine(postDirectoryPath, image.Name));
+					try
+					{
+						_imageDownloader.DownloadImage(GetImageUrl(post, image), Path.Combine(postDirectoryPath, image.Name));
+					}
+					catch (Exception ex)
+					{
+						throw new PostImageDownloadException(post.Url, image.Url, ex);
+					}
 				}
 			}
+		}
+
+		public string GetImageUrl(Post post, Image image)
+		{
+			var imageUri = new Uri(image.Url, UriKind.RelativeOrAbsolute);
+			if (imageUri.IsAbsoluteUri)
+				return imageUri.AbsoluteUri;
+
+			var postUri = new Uri(post.Url, UriKind.Absolute);
+
+			return postUri.Scheme + "://" + postUri.Authority + image.Url;
 		}
 
 		private static string RemoveInvalidCharacters(string name)
