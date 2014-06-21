@@ -51,6 +51,7 @@
     <Compile Include="Json\UnderscorePropertyContractResolver.cs" />
     <Compile Include="Net\HtmlReader.cs" />
     <Compile Include="Net\ImageDownloader.cs" />
+    <Compile Include="Net\PostImagesDownloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Wordpress\WordpressCrawler.cs" />
   </ItemGroup>
