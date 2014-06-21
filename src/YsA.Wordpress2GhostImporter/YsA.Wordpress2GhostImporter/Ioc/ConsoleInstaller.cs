@@ -3,6 +3,8 @@ using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using YsA.Wordpress2GhostImporter.DataAccess.Net;
 using YsA.Wordpress2GhostImporter.Domain.Blog;
+using YsA.Wordpress2GhostImporter.Domain.Writers;
+using YsA.Wordpress2GhostImporter.Writers;
 
 namespace YsA.Wordpress2GhostImporter.Ioc
 {
@@ -10,6 +12,8 @@ namespace YsA.Wordpress2GhostImporter.Ioc
 	{
 		public void Install(IWindsorContainer container, IConfigurationStore store)
 		{
+			container.Register(Component.For<IOutputWriter>().ImplementedBy<ConsoleWriter>().LifestyleSingleton());
+
 			container.Register(
 				Classes.FromAssemblyContaining<Post>().Pick()
 					.WithService.DefaultInterfaces()

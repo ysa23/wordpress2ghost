@@ -1,4 +1,4 @@
-﻿namespace YsA.Wordpress2GhostImporter.DataAccess.Json
+﻿namespace YsA.Wordpress2GhostImporter.Domain.Net
 {
 	public interface IJsonSerializer
 	{

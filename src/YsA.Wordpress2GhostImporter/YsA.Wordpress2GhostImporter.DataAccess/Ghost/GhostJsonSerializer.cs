@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using YsA.Wordpress2GhostImporter.DataAccess.Json;
+using YsA.Wordpress2GhostImporter.Domain.Net;
 
 namespace YsA.Wordpress2GhostImporter.DataAccess.Ghost
 {

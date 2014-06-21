@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ghost\GhostJsonSerializer.cs" />
-    <Compile Include="Json\IJsonSerializer.cs" />
     <Compile Include="Json\MilisecondsDateConverter.cs" />
     <Compile Include="Json\UnderscorePropertyContractResolver.cs" />
     <Compile Include="Net\HtmlReader.cs" />
