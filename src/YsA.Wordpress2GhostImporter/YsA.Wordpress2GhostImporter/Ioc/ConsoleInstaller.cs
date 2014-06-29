@@ -1,6 +1,7 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using YsA.HtmlToMarkdown;
 using YsA.Wordpress2GhostImporter.DataAccess.Net;
 using YsA.Wordpress2GhostImporter.Domain.Blog;
 using YsA.Wordpress2GhostImporter.Domain.Writers;
@@ -20,6 +21,10 @@ namespace YsA.Wordpress2GhostImporter.Ioc
 					.Configure(s => s.LifestyleSingleton()));
 			container.Register(
 				Classes.FromAssemblyContaining<HtmlReader>().Pick()
+					.WithService.DefaultInterfaces()
+					.Configure(s => s.LifestyleSingleton()));
+			container.Register(
+				Classes.FromAssemblyContaining<IHtmlToMarkdownConverter>().Pick()
 					.WithService.DefaultInterfaces()
 					.Configure(s => s.LifestyleSingleton()));
 		}

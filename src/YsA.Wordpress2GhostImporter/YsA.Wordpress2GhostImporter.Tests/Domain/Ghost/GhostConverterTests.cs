@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using Rhino.Mocks;
+using YsA.HtmlToMarkdown;
 using YsA.Wordpress2GhostImporter.Domain.Blog;
 using YsA.Wordpress2GhostImporter.Domain.Ghost;
 using YsA.Wordpress2GhostImporter.Domain.Time;
@@ -10,14 +11,17 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 	public class GhostConverterTests
 	{
 		private IGhostConverter _target;
+
 		private IDateTimeProvider _dateTimeProvider;
+		private IHtmlToMarkdownConverter _htmlToMarkdownConverter;
 
 		[SetUp]
 		public void Setup()
 		{
 			_dateTimeProvider = MockRepository.GenerateStub<IDateTimeProvider>();
+			_htmlToMarkdownConverter = MockRepository.GenerateStub<IHtmlToMarkdownConverter>();
 
-			_target = new GhostConverter(_dateTimeProvider);
+			_target = new GhostConverter(_dateTimeProvider, _htmlToMarkdownConverter);
 		}
 
 		[Test]
@@ -43,6 +47,8 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 				new Post { Title = "post2", Content = "<p>second content</p>", Tags = null, Timestamp = new DateTime(2014, 4, 5) }
 			};
 
+			DoNotConvertToMarkdown();
+
 			var result = _target.FromPosts(posts);
 
 			Assert.That(result, Is.Not.Null);
@@ -51,7 +57,7 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 			Assert.That(result.Data.Posts, Has.Some.Matches<GhostPost>(x =>
 				x.Id == 1 &&
 				x.Title == "post1" &&
-				x.Html == "<p>first content</p>" &&
+				x.Html == null &&
 				x.Markdown == "<p>first content</p>" &&
 				x.MetaTitle == null &&
 				x.MetaDescription == null &&
@@ -60,7 +66,7 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 			Assert.That(result.Data.Posts, Has.Some.Matches<GhostPost>(x =>
 				x.Id == 2 &&
 				x.Title == "post2" &&
-				x.Html == "<p>second content</p>" &&
+				x.Html == null &&
 				x.Markdown == "<p>second content</p>" &&
 				x.MetaTitle == null &&
 				x.MetaDescription == null &&
@@ -68,6 +74,13 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 				x.PublishedAt == new DateTime(2014, 4, 5)));
 			Assert.That(result.Data.Tags, Is.Empty, "Tags should be empty");
 			Assert.That(result.Data.PostsTags, Is.Empty, "PostsTags should be empty");
+		}
+
+		private void DoNotConvertToMarkdown()
+		{
+			_htmlToMarkdownConverter
+				.Stub(x => x.ToMarkdown(Arg<string>.Is.Anything))
+				.Do(new Func<string, string>(x => x));
 		}
 
 		[Test]
@@ -235,12 +248,39 @@ namespace YsA.Wordpress2GhostImporter.Tests.Domain.Ghost
 			{
 				new Post { Title = "post1", Content = "<p>\n\n\r\t\n content </p>", Tags = null, Timestamp = new DateTime(2014, 1, 2) }
 			};
+			DoNotConvertToMarkdown();
 
 			var result = _target.FromPosts(posts);
 
 			Assert.That(result, Is.Not.Null);
 			Assert.That(result.Data, Is.Not.Null);
-			Assert.That(result.Data.Posts, Has.Some.Matches<GhostPost>(x => x.Html == "<p> content </p>"));
+			Assert.That(result.Data.Posts, Has.Some.Matches<GhostPost>(x => x.Markdown == "<p> content </p>"));
+		}
+
+		[Test]
+		public void FromPost_WhenPostContainsHtmlTags_ConvertTagsToMarkdown()
+		{
+			SetNow(new DateTime(2014, 1, 2));
+
+			var posts = new[]
+			{
+				new Post { Title = "post1", Content = "<p>\n\n\r\t\n content </p>", Tags = null, Timestamp = new DateTime(2014, 1, 2) }
+			};
+
+			SetMarkdown("\n\n content \n");
+
+			var result = _target.FromPosts(posts);
+
+			Assert.That(result, Is.Not.Null);
+			Assert.That(result.Data, Is.Not.Null);
+			Assert.That(result.Data.Posts, Has.Some.Matches<GhostPost>(x => x.Markdown == "\n\n content \n"));
+		}
+
+		private void SetMarkdown(string markdown)
+		{
+			_htmlToMarkdownConverter
+				.Stub(x => x.ToMarkdown(Arg<string>.Is.Anything))
+				.Return(markdown);
 		}
 
 		private void SetNow(DateTime dateTime)

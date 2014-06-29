@@ -46,6 +46,9 @@
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
+    <Reference Include="YsA.HtmlToMarkdown">
+      <HintPath>..\..\..\lib\YsA.HtmlToMarkdown.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ioc\ConsoleInstaller.cs" />

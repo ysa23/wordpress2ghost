@@ -40,6 +40,9 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="YsA.HtmlToMarkdown">
+      <HintPath>..\..\..\lib\YsA.HtmlToMarkdown.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\Ghost\GhostJsonSerializerTests.cs" />
